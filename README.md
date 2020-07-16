@@ -1,4 +1,4 @@
-# pizzeriavue
+# hello-world
 
 ## Project setup
 ```
