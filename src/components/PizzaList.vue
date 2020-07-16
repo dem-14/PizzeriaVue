@@ -5,7 +5,7 @@
   <router-link to="/Pizzaedit/2">Pizza Edit</router-link>
   
     <div v-auth= "'admin'">
-      Hello World
+      admin
     </div>
   </div>
 </template>
