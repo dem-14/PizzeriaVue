@@ -1,20 +1,20 @@
 <template>
-  <div >
-    <h1>Login</h1>
-      <Form v-bind:form="form" @submit="save">
-      <Input name="email" text="Email *" value="name@domain.com" />
+  <div>
+    <div>Login</div>
+    <Form :form="form" @submit="save">
+      <Input name="email" text="Email *"/>
       <Input name="password" text="Password *" type="password" />
-      <button type="submit" v-bind:disabled="disabled">Enviar</button>
-      </form>
-
+      <button type="submit" v-bind:disabled="!form.dirty">Enviar</button>
+    </Form>
     <router-link to="/register">Registrarse</router-link>
   </div>
 </template>
 <script>
+import { Form, Input,FormGroup } from "../corelib";
+import LoginService from '../services/loginservice';
 
-import Input from '../corelib/Input.vue'
-import Form from '../corelib/Form.vue'
-import FormGroup from '../corelib/formgrup'
+//const length = (value,min,max)=> value && value.length>min && value.length<=max;
+
 const LOGINVALIDATOR = [{
   fields: ["email"],
   message: "email es requerido",
@@ -26,27 +26,30 @@ const LOGINVALIDATOR = [{
   validators: [{ sanitizer: false, validator: () => true, args: [1, 10] }]
 }]
 
-//const length = (value,min,max)=> value && value.length>min && value.length<=max;
 export default {
   name: "Login",
   data(){
     return {
-      form:new FormGroup(LOGINVALIDATOR),
-      disabled:false,
+      form:new FormGroup(LOGINVALIDATOR)
     }
   },
   methods:{
-    save(data){
-      console.log(data)
+    async save(data){
+      await LoginService.post(data);
+      this.$router.push('/')
     }
   },
-
+ async mounted(){
+    /* LoginService.get().then(response => this.form.values = response.data) ; */
+    const response = await LoginService.get();
+    this.form.values = response.data
+    
+  },  
   components: {
     Form,
     Input
   },
-
-
+  
+  
 };
-
 </script>
