@@ -1,7 +1,7 @@
 <template>
   <div >
     <h1>Login</h1>
-      <Form  v-bind:form="form" @submit="save">
+      <Form v-bind:form="form" @submit="save">
       <Input name="email" text="Email *" value="name@domain.com" />
       <Input name="password" text="Password *" type="password" />
       <button type="submit" v-bind:disabled="disabled">Enviar</button>
@@ -26,6 +26,7 @@ const LOGINVALIDATOR = [{
   validators: [{ sanitizer: false, validator: () => true, args: [1, 10] }]
 }]
 
+//const length = (value,min,max)=> value && value.length>min && value.length<=max;
 export default {
   name: "Login",
   data(){
